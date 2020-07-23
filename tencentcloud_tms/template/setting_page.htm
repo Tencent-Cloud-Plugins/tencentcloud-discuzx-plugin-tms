@@ -1,0 +1,150 @@
+<!--
+ Copyright (C) 2020 Tencent Cloud.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<style type="text/css">
+    input[disabled] {
+        background-color: gainsboro;
+    }
+</style>
+<form action="admin.php?action=plugins&operation=config&do={$pluginid}&identifier=tencentcloud_tms&pmod=setting_page" method="post">
+    <table class="tb tb2">
+        <tbody>
+        <tr>
+            <th colspan="15" class="partition">参数设置</th>
+        </tr>
+        <tr>
+            <td colspan="2" class="td27">自定义密钥:</td>
+        </tr>
+        <tr class="noborder">
+            <td class="vtop rowform">
+                <ul>
+                    <li <!--{if $customKey === 1 }-->class="checked" <!--{/if}--> ><input <!--{if $customKey === 1 }-->checked="checked" <!--{/if}--> id="custom-key" class="radio" type="radio" name="customKey" value="1"><label for="custom-key">是</label></li>
+                    <li <!--{if $customKey === 0 }-->class="checked" <!--{/if}--> ><input <!--{if $customKey === 0 }-->checked="checked" <!--{/if}--> class="radio" id="global-key" type="radio" name="customKey" value="0"><label for="global-key">否</label></li>
+                </ul>
+            </td>
+            <td class="vtop tips2">为该插件配置单独定义的腾讯云密钥</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="td27" ><label for="secret-id">SecretId:</label></td>
+        </tr>
+        <tr class="noborder">
+            <td class="vtop rowform">
+                <input id="secret-id" name="secretId" size="42" type="text" class="text" value="{$secretId}">
+            </td>
+            <td class="vtop tips2">SecretId</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="td27"><label for="secret-key">SecretKey:</label></td>
+        </tr>
+        <tr class="noborder">
+            <td class="vtop rowform">
+                <input name="secretKey" size="42" id="secret-key" type="text" class="text" value="{$secretKey}">
+            </td>
+            <td class="vtop tips2">访问<a href="https://console.qcloud.com/cam/capi" target="_blank">密钥管理</a>获取
+                SecretId和SecretKey或通过"新建密钥"创建密钥串</td>
+        </tr>
+
+        <tr>
+            <td colspan="2" class="td27">发帖检测:</td>
+        </tr>
+        <tr class="noborder">
+            <td class="vtop rowform">
+                <ul>
+                    <li <!--{if $examinePost === 1 }-->class="checked" <!--{/if}--> ><input <!--{if $examinePost === 1 }-->checked="checked" <!--{/if}--> id="examine-post" class="radio" type="radio" name="examinePost" value="1"><label for="examine-post">是</label></li>
+                    <li <!--{if $examinePost === 0 }-->class="checked" <!--{/if}--> ><input <!--{if $examinePost === 0 }-->checked="checked" <!--{/if}--> class="radio" id="not-examine-post" type="radio" name="examinePost" value="0"><label for="not-examine-post">否</label></li>
+                </ul>
+            </td>
+            <td class="vtop tips2">发贴时，检测帖子的标题和帖子的文本内容</td>
+        </tr>
+
+        <tr>
+            <td colspan="2" class="td27">回帖检测:</td>
+        </tr>
+        <tr class="noborder">
+            <td class="vtop rowform">
+                <ul>
+                    <li <!--{if $examineReply === 1 }-->class="checked" <!--{/if}--> ><input <!--{if $examineReply === 1 }-->checked="checked" <!--{/if}--> id="examine-reply" class="radio" type="radio" name="examineReply" value="1"><label for="examine-reply">是</label></li>
+                    <li <!--{if $examineReply === 0 }-->class="checked" <!--{/if}--> ><input <!--{if $examineReply === 0 }-->checked="checked" <!--{/if}--> class="radio" id="not-examine-reply" type="radio" name="examineReply" value="0"><label for="not-examine-reply">否</label></li>
+                </ul>
+            </td>
+            <td class="vtop tips2">检测回帖的文字内容</td>
+        </tr>
+
+        <tr>
+            <td colspan="15">
+                <div class="fixsel">
+                    <input type="submit" class="btn"  id="txc-submit-btn" value="保存" />
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+<div style="text-align: center;flex: 0 0 auto;margin-top: 3rem;">
+    <a href="https://openapp.qq.com/docs/DiscuzX/tms.html" target="_blank">文档中心</a> | <a href="https://github.com/Tencent-Cloud-Plugins/tencentcloud-discuzx-plugin-tms" target="_blank">GitHub</a> | <a
+        href="https://support.qq.com/product/164613" target="_blank">意见反馈</a>
+</div>
+<script src="source/plugin/tencentcloud_sms/js/jquery.min.js"></script>
+<script type="text/javascript">
+    jQuery.noConflict();
+    jQuery(function($){
+        function changeDisable(type){
+            $("#secret-key").attr("disabled",type);
+            $("#secret-id").attr("disabled",type);
+        }
+        function initStatus(){
+            var status = $("#global-key").attr('checked');
+            if (status) {
+                changeDisable(true);
+            }
+        }
+        initStatus();
+
+        $("#custom-key").change(function () {
+            $(this).parent().addClass('checked');
+            $("#global-key").parent().removeClass('checked');
+            changeDisable(false);
+        });
+
+        $("#global-key").change(function () {
+            $(this).parent().addClass('checked');
+            $("#custom-key").parent().removeClass('checked');
+            changeDisable(true);
+        });
+
+        $("#examine-reply").change(function () {
+            $(this).parent().addClass('checked');
+            $("#not-examine-reply").parent().removeClass('checked');
+        });
+
+        $("#not-examine-reply").change(function () {
+            $(this).parent().addClass('checked');
+            $("#examine-reply").parent().removeClass('checked');
+        });
+
+        $("#examine-post").change(function () {
+            $(this).parent().addClass('checked');
+            $("#not-examine-post").parent().removeClass('checked');
+        });
+
+        $("#not-examine-post").change(function () {
+            $(this).parent().addClass('checked');
+            $("#examine-post").parent().removeClass('checked');
+        });
+
+
+    });
+</script>
