@@ -2,15 +2,15 @@
 <root>
 	<item id="Title"><![CDATA[Discuz! Plugin]]></item>
 	<item id="Version"><![CDATA[X3.4]]></item>
-	<item id="Time"><![CDATA[2020-07-08 10:44]]></item>
-	<item id="From"><![CDATA[Discuz! Board (https://openapp.qq.com/docs/DiscuzX/)]]></item>
+	<item id="Time"><![CDATA[2020-08-20 11:31]]></item>
+	<item id="From"><![CDATA[Discuz! Board (http://local.dzx.com/)]]></item>
 	<item id="Data">
 		<item id="plugin">
 			<item id="available"><![CDATA[1]]></item>
 			<item id="adminid"><![CDATA[1]]></item>
 			<item id="name"><![CDATA[腾讯云文本内容安全]]></item>
 			<item id="identifier"><![CDATA[tencentcloud_tms]]></item>
-			<item id="description"><![CDATA[对发帖/回帖时提交的文本内容进行检测]]></item>
+			<item id="description"><![CDATA[对用户发帖/回帖时所提交的文本内容使用腾讯云接口进行检测，从而节省审核人力，释放业务风险]]></item>
 			<item id="datatables"><![CDATA[]]></item>
 			<item id="directory"><![CDATA[tencentcloud_tms/]]></item>
 			<item id="copyright"><![CDATA[腾讯云]]></item>
@@ -45,6 +45,43 @@
 			</item>
 		</item>
 		<item id="version"><![CDATA[X3.4]]></item>
+		<item id="language">
+			<item id="scriptlang">
+				<item id="require_sdk"><![CDATA[缺少依赖文件，请确保安装了腾讯云sdk]]></item>
+				<item id="include"><![CDATA[包含]]></item>
+				<item id="include_keyword"><![CDATA[包含关键字]]></item>
+				<item id="please_delete"><![CDATA[请删除后再提交]]></item>
+				<item id="evil_label_desc">
+					<item id="20001"><![CDATA[涉政]]></item>
+					<item id="20002"><![CDATA[色情]]></item>
+					<item id="20006"><![CDATA[涉毒违法]]></item>
+					<item id="20007"><![CDATA[谩骂]]></item>
+					<item id="20105"><![CDATA[广告]]></item>
+					<item id="24001"><![CDATA[暴恐]]></item>
+				</item>
+				<item id="param_error"><![CDATA[ 为空或格式错误]]></item>
+				<item id="custom_error"><![CDATA[ 自定义密钥传参错误]]></item>
+			</item>
+			<item id="templatelang">
+				<item id="setting"><![CDATA[参数设置]]></item>
+				<item id="yes"><![CDATA[是]]></item>
+				<item id="no"><![CDATA[否]]></item>
+				<item id="visit"><![CDATA[访问]]></item>
+				<item id="custom_key"><![CDATA[自定义密钥：]]></item>
+				<item id="custom_key_desc"><![CDATA[为该插件配置单独定义的腾讯云密钥]]></item>
+				<item id="secret_key_desc"><![CDATA[获取SecretId和SecretKey或通过"新建密钥"创建密钥串]]></item>
+				<item id="secret_manage"><![CDATA[密钥管理]]></item>
+				<item id="app_manage"><![CDATA[应用管理]]></item>
+				<item id="save"><![CDATA[保存]]></item>
+				<item id="system_error"><![CDATA[帖子内容中含有非法字符。或系统内部错误，请联系管理员解决]]></item>
+				<item id="post_examine"><![CDATA[发帖检测:]]></item>
+				<item id="post_examine_desc"><![CDATA[发贴时，检测帖子的标题和帖子的文本内容]]></item>
+				<item id="reply_examine"><![CDATA[回帖检测:]]></item>
+				<item id="reply_examine_desc"><![CDATA[回贴时，检测回帖的文本内容]]></item>
+				<item id="docs_center"><![CDATA[文档中心]]></item>
+				<item id="support"><![CDATA[意见反馈]]></item>
+			</item>
+		</item>
 		<item id="installfile"><![CDATA[install.php]]></item>
 		<item id="uninstallfile"><![CDATA[uninstall.php]]></item>
 		<item id="enablefile"><![CDATA[enable.php]]></item>

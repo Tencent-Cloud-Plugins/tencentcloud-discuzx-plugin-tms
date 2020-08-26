@@ -24,16 +24,15 @@ if( !isset($_SERVER['HTTP_X_REQUESTED_WITH']) || $_SERVER['HTTP_X_REQUESTED_WITH
 use TencentDiscuzTMS\TMSActions;
 use TencentDiscuzTMS\TMSOptions;
 try {
-    global $_G;
-    $options = unserialize($_G['setting'][TENCENT_DISCUZX_TMS_PLUGIN_NAME]);
+    $options = TMSActions::getTMSOptionsObject()->toArray();
     $dzxTMS = new TMSActions();
     if ($options['examinePost'] === TMSOptions::EXAMINE_POST) {
         $dzxTMS->examineContent($dzxTMS->filterPostParam('subject'));
         $dzxTMS->examineContent($dzxTMS->filterPostParam('message'));
     }
-    echo json_encode(array('code'=>$dzxTMS::CODE_SUCCESS,'msg'=>''));
+    echo json_encode(array('code'=>TMSActions::CODE_SUCCESS,'msg'=>''));
     exit();
 } catch (\Exception $exception) {
-    echo json_encode(array('code'=>$dzxTMS::CODE_EXCEPTION,'msg'=>$exception->getMessage()));
+    echo json_encode(array('code'=>TMSActions::CODE_EXCEPTION,'msg'=>$exception->getMessage()));
     exit();
 }

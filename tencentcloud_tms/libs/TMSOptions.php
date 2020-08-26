@@ -54,21 +54,21 @@ class TMSOptions
     public function setSecretID($secretID)
     {
         if ( empty($secretID) && $this->customKey !== self::GLOBAL_KEY) {
-            throw new \Exception('secretID不能为空');
+            throw new \Exception('secretID'.lang('plugin/tencentcloud_tms','param_error'));
         }
         $this->secretID = $secretID;
     }
     public function setSecretKey($secretKey)
     {
         if ( empty($secretKey) && $this->customKey !== self::GLOBAL_KEY ) {
-            throw new \Exception('secretKey不能为空');
+            throw new \Exception('secretKey'.lang('plugin/tencentcloud_tms','param_error'));
         }
         $this->secretKey = $secretKey;
     }
     public function setCustomKey($customKey)
     {
         if ( !in_array($customKey, array(self::GLOBAL_KEY, self::CUSTOM_KEY)) ) {
-            throw new \Exception('自定义密钥传参错误');
+            throw new \Exception(lang('plugin/tencentcloud_tms','custom_error'));
         }
         $this->customKey = intval($customKey);
     }

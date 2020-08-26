@@ -19,29 +19,29 @@ if (!defined('IN_DISCUZ') || !defined('IN_ADMINCP')) {
 }
 defined('TENCENT_DISCUZX_TMS_DIR')||define( 'TENCENT_DISCUZX_TMS_DIR', __DIR__.DIRECTORY_SEPARATOR);
 if (!is_file(TENCENT_DISCUZX_TMS_DIR.'vendor/autoload.php')) {
-    exit('缺少依赖文件，请确保安装了腾讯云sdk');
+    exit(lang('plugin/tencentcloud_tms','require_sdk'));
 }
 require_once 'vendor/autoload.php';
 use TencentDiscuzTMS\TMSActions;
 global $_G;
 $careatesql = "CREATE TABLE IF NOT EXISTS cdb_tencentcloud_pluginInfo (
-       `plugin_name` varchar(255) NOT NULL DEFAULT '',
+       `plugin_name` varchar(150) NOT NULL DEFAULT '',
        `version` varchar(32) NOT NULL DEFAULT '',
        `href` varchar(255) NOT NULL  DEFAULT '',
        `plugin_id` varchar(255) NOT NULL DEFAULT '',
        `activation` varchar(32) NOT NULL DEFAULT '',
        `status` varchar(32) NOT NULL DEFAULT '',
-       `install_datetime` timestamp NOT NULL DEFAULT  CURRENT_TIMESTAMP(),
+       `install_datetime` bigint NOT NULL DEFAULT 0,
        `last_modify_datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP(),
        PRIMARY KEY (`plugin_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB;
 ";
 runquery($careatesql);
-$pluginId = $_G['gp_pluginid'];
-$href = 'admin.php?action=plugins&operation=config&do='.$pluginId;
+$href = ADMINSCRIPT.'?action=plugins&operation=config&do='.$pluginid;
+$time = time();
 $inserSQL=<<<EOF
-REPLACE INTO pre_tencentcloud_pluginInfo (`plugin_name`, `version`, `href`, `plugin_id`, `activation`,`status`)
- VALUES ( 'tencentcloud_tms', '1.0.0', '$href',  '$pluginId', 'true','false');
+REPLACE INTO pre_tencentcloud_pluginInfo (`plugin_name`, `version`, `href`, `plugin_id`, `activation`, `status`, `install_datetime`)
+ VALUES ( 'tencentcloud_tms', '1.0.0', '$href', '$pluginid', 'true', 'false', '$time');
 EOF;
 runquery($inserSQL);
 TMSActions::uploadDzxStatisticsData('activate');

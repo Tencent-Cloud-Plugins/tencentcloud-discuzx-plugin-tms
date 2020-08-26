@@ -19,7 +19,6 @@
 <script type="text/javascript">
     jQuery.noConflict();
     jQuery(function($){
-
         $("#postsubmit").click(function (e) {
             e.preventDefault();
             var subject = $("#subject").val();
@@ -34,10 +33,14 @@
                 },
                 success: function(response) {
                     if (response.code !== 0){
-                        showDialog(response.msg,'error','错误提示');
+                        showDialog(response.msg,'error','error Tips');
                         return false;
                     }
                     $('#postform').submit();
+                },
+                error: function (e) {
+                    showDialog('{lang tencentcloud_tms:system_error}','error','error Tips');
+                    return false;
                 }
             });
         });

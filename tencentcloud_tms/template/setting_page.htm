@@ -23,19 +23,19 @@
     <table class="tb tb2">
         <tbody>
         <tr>
-            <th colspan="15" class="partition">参数设置</th>
+            <th colspan="15" class="partition">{lang tencentcloud_tms:setting}</th>
         </tr>
         <tr>
-            <td colspan="2" class="td27">自定义密钥:</td>
+            <td colspan="2" class="td27">{lang tencentcloud_tms:custom_key}</td>
         </tr>
         <tr class="noborder">
             <td class="vtop rowform">
                 <ul>
-                    <li <!--{if $customKey === 1 }-->class="checked" <!--{/if}--> ><input <!--{if $customKey === 1 }-->checked="checked" <!--{/if}--> id="custom-key" class="radio" type="radio" name="customKey" value="1"><label for="custom-key">是</label></li>
-                    <li <!--{if $customKey === 0 }-->class="checked" <!--{/if}--> ><input <!--{if $customKey === 0 }-->checked="checked" <!--{/if}--> class="radio" id="global-key" type="radio" name="customKey" value="0"><label for="global-key">否</label></li>
+                    <li <!--{if $customKey === 1 }-->class="checked" <!--{/if}--> ><input <!--{if $customKey === 1 }-->checked="checked" <!--{/if}--> id="custom-key" class="radio" type="radio" name="customKey" value="1"><label for="custom-key">{lang tencentcloud_tms:yes}</label></li>
+                    <li <!--{if $customKey === 0 }-->class="checked" <!--{/if}--> ><input <!--{if $customKey === 0 }-->checked="checked" <!--{/if}--> class="radio" id="global-key" type="radio" name="customKey" value="0"><label for="global-key">{lang tencentcloud_tms:no}</label></li>
                 </ul>
             </td>
-            <td class="vtop tips2">为该插件配置单独定义的腾讯云密钥</td>
+            <td class="vtop tips2">{lang tencentcloud_tms:custom_key_desc}</td>
         </tr>
         <tr>
             <td colspan="2" class="td27" ><label for="secret-id">SecretId:</label></td>
@@ -53,40 +53,39 @@
             <td class="vtop rowform">
                 <input name="secretKey" size="42" id="secret-key" type="text" class="text" value="{$secretKey}">
             </td>
-            <td class="vtop tips2">访问<a href="https://console.qcloud.com/cam/capi" target="_blank">密钥管理</a>获取
-                SecretId和SecretKey或通过"新建密钥"创建密钥串</td>
+            <td class="vtop tips2">{lang tencentcloud_tms:visit}<a href="https://console.qcloud.com/cam/capi" target="_blank">{lang tencentcloud_tms:secret_manage}</a>{lang tencentcloud_tms:secret_key_desc}</td>
         </tr>
 
         <tr>
-            <td colspan="2" class="td27">发帖检测:</td>
+            <td colspan="2" class="td27">{lang tencentcloud_tms:post_examine}</td>
         </tr>
         <tr class="noborder">
             <td class="vtop rowform">
                 <ul>
-                    <li <!--{if $examinePost === 1 }-->class="checked" <!--{/if}--> ><input <!--{if $examinePost === 1 }-->checked="checked" <!--{/if}--> id="examine-post" class="radio" type="radio" name="examinePost" value="1"><label for="examine-post">是</label></li>
-                    <li <!--{if $examinePost === 0 }-->class="checked" <!--{/if}--> ><input <!--{if $examinePost === 0 }-->checked="checked" <!--{/if}--> class="radio" id="not-examine-post" type="radio" name="examinePost" value="0"><label for="not-examine-post">否</label></li>
+                    <li <!--{if $examinePost === 1 }-->class="checked" <!--{/if}--> ><input <!--{if $examinePost === 1 }-->checked="checked" <!--{/if}--> id="examine-post" class="radio" type="radio" name="examinePost" value="1"><label for="examine-post">{lang tencentcloud_tms:yes}</label></li>
+                    <li <!--{if $examinePost === 0 }-->class="checked" <!--{/if}--> ><input <!--{if $examinePost === 0 }-->checked="checked" <!--{/if}--> class="radio" id="not-examine-post" type="radio" name="examinePost" value="0"><label for="not-examine-post">{lang tencentcloud_tms:no}</label></li>
                 </ul>
             </td>
-            <td class="vtop tips2">发贴时，检测帖子的标题和帖子的文本内容</td>
+            <td class="vtop tips2">{lang tencentcloud_tms:post_examine_desc}</td>
         </tr>
 
         <tr>
-            <td colspan="2" class="td27">回帖检测:</td>
+            <td colspan="2" class="td27">{lang tencentcloud_tms:reply_examine}</td>
         </tr>
         <tr class="noborder">
             <td class="vtop rowform">
                 <ul>
-                    <li <!--{if $examineReply === 1 }-->class="checked" <!--{/if}--> ><input <!--{if $examineReply === 1 }-->checked="checked" <!--{/if}--> id="examine-reply" class="radio" type="radio" name="examineReply" value="1"><label for="examine-reply">是</label></li>
-                    <li <!--{if $examineReply === 0 }-->class="checked" <!--{/if}--> ><input <!--{if $examineReply === 0 }-->checked="checked" <!--{/if}--> class="radio" id="not-examine-reply" type="radio" name="examineReply" value="0"><label for="not-examine-reply">否</label></li>
+                    <li <!--{if $examineReply === 1 }-->class="checked" <!--{/if}--> ><input <!--{if $examineReply === 1 }-->checked="checked" <!--{/if}--> id="examine-reply" class="radio" type="radio" name="examineReply" value="1"><label for="examine-reply">{lang tencentcloud_tms:yes}</label></li>
+                    <li <!--{if $examineReply === 0 }-->class="checked" <!--{/if}--> ><input <!--{if $examineReply === 0 }-->checked="checked" <!--{/if}--> class="radio" id="not-examine-reply" type="radio" name="examineReply" value="0"><label for="not-examine-reply">{lang tencentcloud_tms:no}</label></li>
                 </ul>
             </td>
-            <td class="vtop tips2">检测回帖的文字内容</td>
+            <td class="vtop tips2">{lang tencentcloud_tms:reply_examine_desc}</td>
         </tr>
 
         <tr>
             <td colspan="15">
                 <div class="fixsel">
-                    <input type="submit" class="btn"  id="txc-submit-btn" value="保存" />
+                    <input type="submit" class="btn"  id="txc-submit-btn" value="{lang tencentcloud_tms:save}" />
                 </div>
             </td>
         </tr>
@@ -94,10 +93,10 @@
     </table>
 </form>
 <div style="text-align: center;flex: 0 0 auto;margin-top: 3rem;">
-    <a href="https://openapp.qq.com/docs/DiscuzX/tms.html" target="_blank">文档中心</a> | <a href="https://github.com/Tencent-Cloud-Plugins/tencentcloud-discuzx-plugin-tms" target="_blank">GitHub</a> | <a
-        href="https://support.qq.com/product/164613" target="_blank">意见反馈</a>
+    <a href="https://openapp.qq.com/docs/DiscuzX/tms.html" target="_blank">{lang tencentcloud_tms:docs_center}</a> | <a href="https://github.com/Tencent-Cloud-Plugins/tencentcloud-discuzx-plugin-tms" target="_blank">GitHub</a> | <a
+        href="https://support.qq.com/product/164613" target="_blank">{lang tencentcloud_tms:support}</a>
 </div>
-<script src="source/plugin/tencentcloud_sms/js/jquery.min.js"></script>
+<script src="source/plugin/tencentcloud_tms/js/jquery.min.js"></script>
 <script type="text/javascript">
     jQuery.noConflict();
     jQuery(function($){

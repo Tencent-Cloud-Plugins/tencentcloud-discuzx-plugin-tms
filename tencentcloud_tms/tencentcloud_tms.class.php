@@ -20,7 +20,7 @@ if (!defined('IN_DISCUZ')){
 defined('TENCENT_DISCUZX_TMS_DIR')||define( 'TENCENT_DISCUZX_TMS_DIR', __DIR__.DIRECTORY_SEPARATOR);
 defined('TENCENT_DISCUZX_TMS_PLUGIN_NAME')||define( 'TENCENT_DISCUZX_TMS_PLUGIN_NAME', 'tencentcloud_tms');
 if (!is_file(TENCENT_DISCUZX_TMS_DIR.'vendor/autoload.php')) {
-    exit('缺少依赖文件，请确保安装了腾讯云sdk');
+    exit(lang('plugin/tencentcloud_tms','require_sdk'));
 }
 require_once 'vendor/autoload.php';
 
@@ -37,24 +37,25 @@ class plugin_tencentcloud_tms
 
     public function common()
     {
-        global $_G;
-        if ( $_G['gp_mod'] !== 'post' ) {
+        if ( $_GET['mod'] !== 'post' ) {
             return;
         }
         $dzxTMS = new TMSActions();
-
         try {
+            if (empty(self::$pluginOptions)) {
+                self::$pluginOptions = TMSActions::getTMSOptionsObject()->toArray();
+            }
             //快速发帖时检测帖子的标贴和内容
-            if ( $_G['gp_action'] === 'newthread'
-                && $_G['gp_handlekey'] === 'fastnewpost'
-                && $_G['gp_inajax'] === '1'
+            if ( $_GET['action'] === 'newthread'
+                && $_GET['handlekey'] === 'fastnewpost'
+                && $_GET['inajax'] == '1'
                 && self::$pluginOptions['examinePost'] === TMSOptions::EXAMINE_POST
             ) {
                 $dzxTMS->examineContent($dzxTMS->filterPostParam('subject'));
                 $dzxTMS->examineContent($dzxTMS->filterPostParam('message'));
             }
             //检测回帖的内容
-            if ( $_G['gp_action'] === 'reply'&& self::$pluginOptions['examineReply'] === TMSOptions::EXAMINE_REPLY ) {
+            if ( $_GET['action'] === 'reply'&& self::$pluginOptions['examineReply'] === TMSOptions::EXAMINE_REPLY ) {
                 $dzxTMS->examineContent($dzxTMS->filterPostParam('message'));
             }
         } catch (\Exception $exception) {

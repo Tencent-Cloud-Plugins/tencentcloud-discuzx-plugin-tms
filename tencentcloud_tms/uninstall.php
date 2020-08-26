@@ -19,10 +19,12 @@ if (!defined('IN_DISCUZ') || !defined('IN_ADMINCP')) {
 }
 defined('TENCENT_DISCUZX_TMS_DIR')||define( 'TENCENT_DISCUZX_TMS_DIR', __DIR__.DIRECTORY_SEPARATOR);
 if (!is_file(TENCENT_DISCUZX_TMS_DIR.'vendor/autoload.php')) {
-    exit('缺少依赖文件，请确保安装了腾讯云sdk');
+    exit(lang('plugin/tencentcloud_tms','require_sdk'));
 }
 require_once 'vendor/autoload.php';
 use TencentDiscuzTMS\TMSActions;
 
 runquery("DELETE FROM  cdb_tencentcloud_pluginInfo  WHERE plugin_name = 'tencentcloud_tms'");
+runquery("DELETE FROM  cdb_common_setting  WHERE skey = 'tencentcloud_tms'");
+
 TMSActions::uploadDzxStatisticsData('uninstall');

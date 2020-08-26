@@ -31,21 +31,7 @@ class TMSActions
     const CODE_SUCCESS = 0;
     const CODE_EXCEPTION = 10000;
 
-    const EVIL_LABEL_POLITY = 20001;
-    const EVIL_LABEL_PORN = 20002;
-    const EVIL_LABEL_ILLEGAL = 20006;
-    const EVIL_LABEL_ABUSE = 20007;
-    const EVIL_LABEL_AD = 20105;
-    const EVIL_LABEL_TERROR = 24001;
 
-    const EVIL_LABEL_DESC = [
-        self::EVIL_LABEL_POLITY=>'涉政',
-        self::EVIL_LABEL_PORN=>'色情',
-        self::EVIL_LABEL_ILLEGAL=>'涉毒违法',
-        self::EVIL_LABEL_ABUSE=>'谩骂',
-        self::EVIL_LABEL_AD=>'广告',
-        self::EVIL_LABEL_TERROR=>'暴恐',
-    ];
 
     /**
      * post参数过滤
@@ -91,10 +77,11 @@ class TMSActions
         if ( !($response instanceof TextModerationResponse) ) {
             return true;
         }
+        $lang = lang('plugin/tencentcloud_tms');
         if ( $response->getData()->EvilFlag !== 0 || $response->getData()->EvilType !== 100 ) {
             $msg = !empty($response->getData()->Keywords[0])?
-                '包含关键字：【'.$response->getData()->Keywords[0].'】 请删除后再提交'
-                : '包含'.self::EVIL_LABEL_DESC[$response->getData()->EvilType].'内容，请删除后再提交';
+                $lang['include_keyword'].'：【'.$response->getData()->Keywords[0].'】'.$lang['please_delete']
+                : $lang['include'].$lang['evil_label_desc'][$response->getData()->EvilType].$lang['please_delete'];
             throw new \Exception($msg);
         }
         return true;
@@ -129,19 +116,21 @@ class TMSActions
      */
     public static function getTMSOptionsObject()
     {
-
         global $_G;
         $TMSOptions = new TMSOptions();
         $options = $_G['setting'][TENCENT_DISCUZX_TMS_PLUGIN_NAME];
-        if (!empty($options)) {
-            C::t('common_pluginvar')->delete_by_pluginid($GLOBALS['pluginid']);
-            $options = unserialize($options);
-            $TMSOptions->setCustomKey($options['customKey']);
-            $TMSOptions->setSecretID($options['secretId']);
-            $TMSOptions->setSecretKey($options['secretKey']);
-            $TMSOptions->setExaminePost($options['examinePost']);
-            $TMSOptions->setExamineReply($options['examineReply']);
+        if (empty($options)) {
+            $options = C::t('common_setting')->fetch(TENCENT_DISCUZX_TMS_PLUGIN_NAME);
         }
+        if (empty($options)) {
+            return $TMSOptions;
+        }
+        $options = unserialize($options);
+        $TMSOptions->setCustomKey($options['customKey']);
+        $TMSOptions->setSecretID($options['secretId']);
+        $TMSOptions->setSecretKey($options['secretKey']);
+        $TMSOptions->setExaminePost($options['examinePost']);
+        $TMSOptions->setExamineReply($options['examineReply']);
         return $TMSOptions;
     }
 
