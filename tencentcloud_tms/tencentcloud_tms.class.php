@@ -51,12 +51,12 @@ class plugin_tencentcloud_tms
                 && $_GET['inajax'] == '1'
                 && self::$pluginOptions['examinePost'] === TMSOptions::EXAMINE_POST
             ) {
-                $dzxTMS->examineContent($dzxTMS->filterPostParam('subject'));
-                $dzxTMS->examineContent($dzxTMS->filterPostParam('message'));
+                $dzxTMS->examineContent($dzxTMS->filterPostParam('subject'),$dzxTMS::TYPE_POST_TITLE);
+                $dzxTMS->examineContent($dzxTMS->filterPostParam('message'),$dzxTMS::TYPE_POST_CONTENT);
             }
             //检测回帖的内容
-            if ( $_GET['action'] === 'reply'&& self::$pluginOptions['examineReply'] === TMSOptions::EXAMINE_REPLY ) {
-                $dzxTMS->examineContent($dzxTMS->filterPostParam('message'));
+            if ( $_GET['action'] === 'reply'&& self::$pluginOptions['examineReply'] === TMSOptions::EXAMINE_REPLY) {
+                $dzxTMS->examineContent($dzxTMS->filterPostParam('message'),$dzxTMS::TYPE_REPLY_CONTENT);
             }
         } catch (\Exception $exception) {
             showmessage($exception->getMessage());

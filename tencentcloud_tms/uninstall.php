@@ -26,5 +26,6 @@ use TencentDiscuzTMS\TMSActions;
 
 runquery("DELETE FROM  cdb_tencentcloud_pluginInfo  WHERE plugin_name = 'tencentcloud_tms'");
 runquery("DELETE FROM  cdb_common_setting  WHERE skey = 'tencentcloud_tms'");
-
+runquery("DROP TABLE IF EXISTS `cdb_tencent_discuzx_tms_keyword_records`;");
+runquery("DROP TABLE IF EXISTS `cdb_tencent_discuzx_tms_keyword_whitelist`;");
 TMSActions::uploadDzxStatisticsData('uninstall');

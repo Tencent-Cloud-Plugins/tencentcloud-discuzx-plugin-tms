@@ -25,13 +25,26 @@ use TencentCloud\Cms\V20190321\CmsClient;
 use TencentCloud\Cms\V20190321\Models\TextModerationRequest;
 use TencentCloud\Cms\V20190321\Models\TextModerationResponse;
 defined('TENCENT_DISCUZX_TMS_PLUGIN_NAME')||define( 'TENCENT_DISCUZX_TMS_PLUGIN_NAME', 'tencentcloud_tms');
+defined('TENCENT_DISCUZX_TMS_KEYWORD_RECORDS_TABLE')
+||define( 'TENCENT_DISCUZX_TMS_KEYWORD_RECORDS_TABLE', 'tencent_discuzx_tms_keyword_records');
+defined('TENCENT_DISCUZX_TMS_KEYWORD_WHITELIST_TABLE')
+||define( 'TENCENT_DISCUZX_TMS_KEYWORD_WHITELIST_TABLE', 'tencent_discuzx_tms_keyword_whitelist');
+
 class TMSActions
 {
     const PLUGIN_TYPE = 'tms';
     const CODE_SUCCESS = 0;
     const CODE_EXCEPTION = 10000;
-
-
+    //触发拦截
+    const STATUS_INTERCEPT = 1;
+    //在白名单中未进行拦截
+    const STATUS_WHITELIST = 2;
+    //发帖标题触发
+    const TYPE_POST_TITLE = 1;
+    //发帖内容触发
+    const TYPE_POST_CONTENT = 2;
+    //回帖内容触发
+    const TYPE_REPLY_CONTENT = 3;
 
     /**
      * post参数过滤
@@ -58,10 +71,11 @@ class TMSActions
     /**
      * 文本检测
      * @param $text
+     * @param int $type
      * @return bool
      * @throws Exception
      */
-    public function examineContent($text)
+    public function examineContent($text,$type)
     {
         if (empty($text)) {
             return true;
@@ -77,11 +91,35 @@ class TMSActions
         if ( !($response instanceof TextModerationResponse) ) {
             return true;
         }
+
+        //检测通过
+        if ($response->getData()->getEvilLabel() === 'Normal' && $response->getData()->getEvilFlag() === 0) {
+            return true;
+        }
         $lang = lang('plugin/tencentcloud_tms');
-        if ( $response->getData()->EvilFlag !== 0 || $response->getData()->EvilType !== 100 ) {
-            $msg = !empty($response->getData()->Keywords[0])?
-                $lang['include_keyword'].'：【'.$response->getData()->Keywords[0].'】'.$lang['please_delete']
-                : $lang['include'].$lang['evil_label_desc'][$response->getData()->EvilType].$lang['please_delete'];
+        $keywords = $response->getData()->getKeywords();
+        if (!empty($keywords)) {
+            $keyword = $keywords[0];
+            $msg = $lang['include'].$lang['keyword'].': 【'.$keyword.'】'.$lang['please_delete'];
+        } else {
+            $keyword = '';
+            $msg = $lang['include'].
+                $lang['evil_label_desc'][$response->getData()->getEvilLabel()]. $lang['info'].$lang['please_delete'];
+        }
+        $status = $this->interceptStatus($TMSOptions,$keyword,$response->getData()->getEvilLabel());
+        global $_G;
+        $data = array(
+            'uid'=> $_G['uid'],
+            'username'=> $_G['username'],
+            'keyword'=> $keyword,
+            'type'=> $type,
+            'examine_text'=> $text,
+            'status'=> $status,
+            'evil_label'=>$response->getData()->getEvilLabel(),
+            'examine_date'=> time(),
+        );
+        $this->keywordRecord($data);
+        if ($status !== self::STATUS_WHITELIST) {
             throw new \Exception($msg);
         }
         return true;
@@ -110,6 +148,70 @@ class TMSActions
     }
 
     /**
+     * @param $data
+     * @return int|string
+     * @throws Exception
+     */
+    private function keywordRecord($data)
+    {
+        $id = DB::insert(TENCENT_DISCUZX_TMS_KEYWORD_RECORDS_TABLE,$data,true);
+        if (!is_numeric($id)) {
+            throw new \Exception(lang('plugin/tencentcloud_tms','insert_fail'));
+        }
+        return $id;
+    }
+
+    public function addKeywordToWhitelist($keywords)
+    {
+        if (empty($keywords)) {
+            return 0;
+        }
+        $sql = 'INSERT INTO %t (`keyword`, `valid`) VALUES ';
+        $params = array(TENCENT_DISCUZX_TMS_KEYWORD_WHITELIST_TABLE);
+        foreach ($keywords as $keyword) {
+           $sql .= '(%s,%d),';
+            $params[] = $keyword;
+            $params[] = 1;
+        }
+        $sql = rtrim($sql,',');
+        return DB::query($sql,$params);
+    }
+
+    public function deleteKeywordsFromWhitelist($ids)
+    {
+        if (empty($ids)) {
+            return true;
+        }
+        return DB::delete(TENCENT_DISCUZX_TMS_KEYWORD_WHITELIST_TABLE, DB::field('id', $ids,'in'));
+    }
+
+    /**
+     * 返沪拦截类型
+     * @param TMSOptions $TMSOptions
+     * @param $keyword
+     * @param $interceptType
+     * @return int
+     */
+    private function interceptStatus($TMSOptions,$keyword,$interceptType)
+    {
+        $checkedInterceptType = $TMSOptions->getInterceptType();
+        if (!empty($keyword)) {
+            $keyword = dhtmlspecialchars($keyword);
+            $sql = "SELECT `id` FROM %t WHERE `keyword`=%s";
+            $result = DB::fetch_first($sql,array(TENCENT_DISCUZX_TMS_KEYWORD_WHITELIST_TABLE,$keyword));
+            if (isset($result['id']) && !empty($result['id'])) {
+                return self::STATUS_WHITELIST;
+            }
+        }
+        if (!in_array($interceptType,$checkedInterceptType)) {
+            return self::STATUS_WHITELIST;
+        }
+        return self::STATUS_INTERCEPT;
+    }
+
+
+
+    /**
      * 获取配置对象
      * @return TMSOptions
      * @throws Exception
@@ -131,6 +233,7 @@ class TMSActions
         $TMSOptions->setSecretKey($options['secretKey']);
         $TMSOptions->setExaminePost($options['examinePost']);
         $TMSOptions->setExamineReply($options['examineReply']);
+        $TMSOptions->setInterceptType($options['interceptType']);
         return $TMSOptions;
     }
 

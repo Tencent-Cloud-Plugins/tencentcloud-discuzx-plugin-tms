@@ -14,7 +14,7 @@
 			<item id="datatables"><![CDATA[]]></item>
 			<item id="directory"><![CDATA[tencentcloud_tms/]]></item>
 			<item id="copyright"><![CDATA[腾讯云]]></item>
-			<item id="version"><![CDATA[1.0.0]]></item>
+			<item id="version"><![CDATA[1.0.1]]></item>
 			<item id="__modules">
 				<item id="0">
 					<item id="name"><![CDATA[tencentcloud_tms]]></item>
@@ -42,25 +42,91 @@
 					<item id="navsubname"><![CDATA[]]></item>
 					<item id="navsuburl"><![CDATA[]]></item>
 				</item>
+				<item id="2">
+					<item id="name"><![CDATA[keyword_whitelist]]></item>
+					<item id="param"><![CDATA[]]></item>
+					<item id="menu"><![CDATA[敏感词白名单]]></item>
+					<item id="url"><![CDATA[]]></item>
+					<item id="type"><![CDATA[3]]></item>
+					<item id="adminid"><![CDATA[0]]></item>
+					<item id="displayorder"><![CDATA[1]]></item>
+					<item id="navtitle"><![CDATA[]]></item>
+					<item id="navicon"><![CDATA[]]></item>
+					<item id="navsubname"><![CDATA[]]></item>
+					<item id="navsuburl"><![CDATA[]]></item>
+				</item>
+				<item id="3">
+					<item id="name"><![CDATA[keyword_records]]></item>
+					<item id="param"><![CDATA[]]></item>
+					<item id="menu"><![CDATA[敏感词触发记录]]></item>
+					<item id="url"><![CDATA[]]></item>
+					<item id="type"><![CDATA[3]]></item>
+					<item id="adminid"><![CDATA[0]]></item>
+					<item id="displayorder"><![CDATA[2]]></item>
+					<item id="navtitle"><![CDATA[]]></item>
+					<item id="navicon"><![CDATA[]]></item>
+					<item id="navsubname"><![CDATA[]]></item>
+					<item id="navsuburl"><![CDATA[]]></item>
+				</item>
 			</item>
 		</item>
 		<item id="version"><![CDATA[X3.4]]></item>
 		<item id="language">
 			<item id="scriptlang">
-				<item id="require_sdk"><![CDATA[缺少依赖文件，请确保安装了腾讯云sdk]]></item>
+				<item id="require_sdk"><![CDATA[缺少依赖文件，请确保安装了腾讯云sdk！]]></item>
+				<item id="insert_fail"><![CDATA[检测失败,请联系管理员。]]></item>
 				<item id="include"><![CDATA[包含]]></item>
-				<item id="include_keyword"><![CDATA[包含关键字]]></item>
-				<item id="please_delete"><![CDATA[请删除后再提交]]></item>
+				<item id="info"><![CDATA[信息]]></item>
+				<item id="keyword"><![CDATA[敏感词]]></item>
+				<item id="add"><![CDATA[添加]]></item>
+				<item id="submit"><![CDATA[提交]]></item>
+				<item id="select_all"><![CDATA[全选]]></item>
+				<item id="del"><![CDATA[勾选删除]]></item>
+				<item id="please_delete"><![CDATA[请删除后再提交！]]></item>
 				<item id="evil_label_desc">
-					<item id="20001"><![CDATA[涉政]]></item>
-					<item id="20002"><![CDATA[色情]]></item>
-					<item id="20006"><![CDATA[涉毒违法]]></item>
-					<item id="20007"><![CDATA[谩骂]]></item>
-					<item id="20105"><![CDATA[广告]]></item>
-					<item id="24001"><![CDATA[暴恐]]></item>
+					<item id="all"><![CDATA[全部]]></item>
+					<item id="Polity"><![CDATA[涉政]]></item>
+					<item id="Porn"><![CDATA[色情]]></item>
+					<item id="Illegal"><![CDATA[涉毒违法]]></item>
+					<item id="Abuse"><![CDATA[谩骂]]></item>
+					<item id="Ad"><![CDATA[广告]]></item>
+					<item id="Terror"><![CDATA[暴恐]]></item>
+					<item id="Custom"><![CDATA[自定义敏感词]]></item>
 				</item>
-				<item id="param_error"><![CDATA[ 为空或格式错误]]></item>
-				<item id="custom_error"><![CDATA[ 自定义密钥传参错误]]></item>
+				<item id="trigger_type_maps">
+					<item id="0"><![CDATA[全部]]></item>
+					<item id="1"><![CDATA[发帖的标题]]></item>
+					<item id="2"><![CDATA[发帖的内容]]></item>
+					<item id="3"><![CDATA[回帖的内容]]></item>
+				</item>
+				<item id="intercept_status_maps">
+					<item id="0"><![CDATA[全部]]></item>
+					<item id="1"><![CDATA[已拦截]]></item>
+					<item id="2"><![CDATA[未拦截(在白名单中)]]></item>
+				</item>
+				<item id="examine_record"><![CDATA[敏感词触发记录]]></item>
+				<item id="start_date"><![CDATA[开始日期]]></item>
+				<item id="end_date"><![CDATA[截止日期]]></item>
+				<item id="evil_label"><![CDATA[敏感词类型]]></item>
+				<item id="intercept_status"><![CDATA[拦截状态]]></item>
+				<item id="page_size"><![CDATA[每页大小]]></item>
+				<item id="search"><![CDATA[搜索]]></item>
+				<item id="table_head">
+					<item id="0"><![CDATA[用户ID]]></item>
+					<item id="1"><![CDATA[用户名]]></item>
+					<item id="2"><![CDATA[敏感词]]></item>
+					<item id="3"><![CDATA[敏感词类型]]></item>
+					<item id="4"><![CDATA[触发点]]></item>
+					<item id="5"><![CDATA[拦截状态]]></item>
+					<item id="6"><![CDATA[触发时间]]></item>
+				</item>
+				<item id="add_error"><![CDATA[新增关键词出错]]></item>
+				<item id="delete_error"><![CDATA[删除关键词出错]]></item>
+				<item id="success"><![CDATA[操作成功]]></item>
+				<item id="param_error"><![CDATA[为空或格式错误]]></item>
+				<item id="custom_error"><![CDATA[自定义密钥传参错误]]></item>
+				<item id="docs_center"><![CDATA[文档中心]]></item>
+				<item id="support"><![CDATA[意见反馈]]></item>
 			</item>
 			<item id="templatelang">
 				<item id="setting"><![CDATA[参数设置]]></item>
@@ -78,6 +144,8 @@
 				<item id="post_examine_desc"><![CDATA[发贴时，检测帖子的标题和帖子的文本内容]]></item>
 				<item id="reply_examine"><![CDATA[回帖检测:]]></item>
 				<item id="reply_examine_desc"><![CDATA[回贴时，检测回帖的文本内容]]></item>
+				<item id="need_intercept"><![CDATA[拦截敏感词类型:]]></item>
+				<item id="need_intercept_desc"><![CDATA[需要拦截的敏感词类型，如敏感词在白名单中，则不会拦截]]></item>
 				<item id="docs_center"><![CDATA[文档中心]]></item>
 				<item id="support"><![CDATA[意见反馈]]></item>
 			</item>

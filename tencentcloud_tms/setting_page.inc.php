@@ -19,7 +19,7 @@ if (!defined('IN_DISCUZ') || !defined('IN_ADMINCP')) {
 }
 defined('TENCENT_DISCUZX_TMS_DIR')||define( 'TENCENT_DISCUZX_TMS_DIR', __DIR__.DIRECTORY_SEPARATOR);
 if (!is_file(TENCENT_DISCUZX_TMS_DIR.'vendor/autoload.php')) {
-    exit('缺少依赖文件，请确保安装了腾讯云sdk');
+    exit(lang('plugin/tencentcloud_tms','require_sdk'));
 }
 require_once 'vendor/autoload.php';
 use TencentDiscuzTMS\TMSActions;
@@ -34,6 +34,9 @@ try {
         $customKey = $options->getCustomKey();
         $examinePost = $options->getExaminePost();
         $examineReply = $options->getExamineReply();
+        $checkedInterceptType = $options->getInterceptType();
+        $interceptTypeList = lang('plugin/tencentcloud_tms','evil_label_desc');
+        unset($interceptTypeList['all']);
         include template('tencentcloud_tms:setting_page');
         exit;
     }
@@ -44,6 +47,7 @@ try {
     $options->setSecretKey($dzxTMS->filterPostParam('secretKey'));
     $options->setExaminePost($dzxTMS->filterPostParam('examinePost'));
     $options->setExamineReply($dzxTMS->filterPostParam('examineReply'));
+    $options->setInterceptType($dzxTMS->filterPostParam('checkedType'));
 
     C::t('common_setting')->update_batch(array("tencentcloud_tms" => $options->toArray()));
     updatecache('setting');

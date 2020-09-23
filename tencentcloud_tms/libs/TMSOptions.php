@@ -25,6 +25,16 @@ class TMSOptions
     const EXAMINE_POST = 1;
     //检测回帖
     const EXAMINE_REPLY = 1;
+    //
+    const DEFAULT_INTERCEPT_TYPE = array(
+        'Polity',
+        'Porn',
+        'Illegal',
+        'Abuse',
+        'Ad',
+        'Terror',
+        'Custom'
+    );
 
     private $commonOptions;
     private $secretID;
@@ -32,13 +42,17 @@ class TMSOptions
     private $customKey;
     private $examinePost;
     private $examineReply;
-    public function __construct($customKey = self::GLOBAL_KEY, $secretID = '', $secretKey = '',$examinePost=1,$examineReply=1)
+    private $interceptType;
+    public function __construct($customKey = self::GLOBAL_KEY, $secretID = '', $secretKey = '',
+                                $examinePost=self::EXAMINE_POST,$examineReply=self::EXAMINE_REPLY,
+                                $interceptType=self::DEFAULT_INTERCEPT_TYPE)
     {
         $this->customKey = intval($customKey);
         $this->secretID = $secretID;
         $this->secretKey = $secretKey;
         $this->examinePost = intval($examinePost);
         $this->examineReply = intval($examineReply);
+        $this->interceptType = $interceptType;
         global $_G;
         if (isset($_G['setting']['tencentcloud_center'])) {
             $this->commonOptions = unserialize($_G['setting']['tencentcloud_center']);
@@ -83,6 +97,19 @@ class TMSOptions
         $this->examineReply = intval($examineReply);
     }
 
+    public function setInterceptType($interceptType)
+    {
+        if ( !is_array($interceptType) ) {
+            throw new \Exception(lang('plugin/tencentcloud_tms','custom_error'));
+        }
+        $this->interceptType = $interceptType;
+    }
+
+    public function getInterceptType()
+    {
+        return $this->interceptType;
+    }
+
     public function getSecretID()
     {
         if ( $this->customKey === self::GLOBAL_KEY && isset($this->commonOptions['secretId']) ) {
@@ -119,6 +146,7 @@ class TMSOptions
             'secretKey'=>$this->secretKey,
             'examinePost'=>$this->examinePost,
             'examineReply'=>$this->examineReply,
+            'interceptType'=>$this->interceptType,
         );
     }
 }

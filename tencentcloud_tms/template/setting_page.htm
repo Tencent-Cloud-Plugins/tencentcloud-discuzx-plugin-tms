@@ -83,6 +83,20 @@
         </tr>
 
         <tr>
+            <td colspan="2" class="td27">{lang tencentcloud_tms:need_intercept}</td>
+        </tr>
+        <tr class="noborder">
+            <td class="vtop rowform">
+                <ul>
+                    <!--{loop $interceptTypeList $key $val}-->
+                    <li><input <!--{if in_array($key,$checkedInterceptType) }-->checked="checked" <!--{/if}--> id="type-{$key}" class="checkbox" value="{$key}" type="checkbox" name="checkedType[]" ><label for="type-{$key}">{$val}</label></li>
+                    <!--{/loop}-->
+                </ul>
+            </td>
+            <td class="vtop tips2">{lang tencentcloud_tms:need_intercept_desc}</td>
+        </tr>
+
+        <tr>
             <td colspan="15">
                 <div class="fixsel">
                     <input type="submit" class="btn"  id="txc-submit-btn" value="{lang tencentcloud_tms:save}" />

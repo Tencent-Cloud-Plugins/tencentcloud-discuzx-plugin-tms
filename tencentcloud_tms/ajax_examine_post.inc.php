@@ -27,8 +27,8 @@ try {
     $options = TMSActions::getTMSOptionsObject()->toArray();
     $dzxTMS = new TMSActions();
     if ($options['examinePost'] === TMSOptions::EXAMINE_POST) {
-        $dzxTMS->examineContent($dzxTMS->filterPostParam('subject'));
-        $dzxTMS->examineContent($dzxTMS->filterPostParam('message'));
+        $dzxTMS->examineContent($dzxTMS->filterPostParam('subject'),$dzxTMS::TYPE_POST_TITLE);
+        $dzxTMS->examineContent($dzxTMS->filterPostParam('message'),$dzxTMS::TYPE_POST_CONTENT);
     }
     echo json_encode(array('code'=>TMSActions::CODE_SUCCESS,'msg'=>''));
     exit();
