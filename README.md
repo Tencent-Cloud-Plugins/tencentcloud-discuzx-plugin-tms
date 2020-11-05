@@ -72,6 +72,8 @@
 ### 7.1 tencentcloud-discuzx-plugin-tms v1.0.0
 
 - 对用户在发帖/回帖场景中提交的内容进行安全审核，识别过滤涉及黄、爆、恐的信息。
+###7.2 tencentcloud-discuzx-plugin-tms v1.1.0
+- 支持触屏版
 
 ---
 
