@@ -100,7 +100,7 @@ class TMSActions
         $keywords = $response->getData()->getKeywords();
         if (!empty($keywords)) {
             $keyword = $keywords[0];
-            $msg = $lang['include'].$lang['keyword'].': 【'.$keyword.'】'.$lang['please_delete'];
+            $msg = $lang['include'].$lang['keyword'].'：【'.$keyword.'】'.$lang['please_delete'];
         } else {
             $keyword = '';
             $msg = $lang['include'].

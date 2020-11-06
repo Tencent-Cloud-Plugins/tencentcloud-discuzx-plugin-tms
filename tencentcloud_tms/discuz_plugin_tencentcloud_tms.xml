@@ -68,6 +68,19 @@
 					<item id="navsubname"><![CDATA[]]></item>
 					<item id="navsuburl"><![CDATA[]]></item>
 				</item>
+				<item id="4">
+					<item id="name"><![CDATA[mobile_tencentcloud_tms]]></item>
+					<item id="param"><![CDATA[]]></item>
+					<item id="menu"><![CDATA[]]></item>
+					<item id="url"><![CDATA[]]></item>
+					<item id="type"><![CDATA[28]]></item>
+					<item id="adminid"><![CDATA[0]]></item>
+					<item id="displayorder"><![CDATA[0]]></item>
+					<item id="navtitle"><![CDATA[]]></item>
+					<item id="navicon"><![CDATA[]]></item>
+					<item id="navsubname"><![CDATA[]]></item>
+					<item id="navsuburl"><![CDATA[]]></item>
+				</item>
 			</item>
 		</item>
 		<item id="version"><![CDATA[X3.4]]></item>
@@ -154,5 +167,6 @@
 		<item id="uninstallfile"><![CDATA[uninstall.php]]></item>
 		<item id="enablefile"><![CDATA[enable.php]]></item>
 		<item id="disablefile"><![CDATA[disable.php]]></item>
+		<item id="upgradefile"><![CDATA[upgrade.php]]></item>
 	</item>
 </root>
